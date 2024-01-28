@@ -31,8 +31,8 @@ namespace NZWalks.API.Repositories
                 return null;
             }
 
-            _nZWalksDb?.Regions.Remove(region);
-            await _nZWalksDb?.SaveChangesAsync();
+            _nZWalksDb.Regions.Remove(region);
+            await _nZWalksDb.SaveChangesAsync();
 
             return region;
         }
@@ -49,17 +49,24 @@ namespace NZWalks.API.Repositories
 
         public async Task<Region> UpdateAsync(Guid id, Region updateRegionObj)
         {
-            var region = await _nZWalksDb.Regions.FirstOrDefaultAsync(r => r.Id == id);
+            var regionFromDb = await _nZWalksDb.Regions.FirstOrDefaultAsync(r => r.Id == id);
             
-            if (region == null)
+            if (regionFromDb == null)
             {
                 return null;
             }
 
-            _nZWalksDb.Update(region);
+            regionFromDb.Area = updateRegionObj.Area;
+            regionFromDb.Population = updateRegionObj.Population;
+            regionFromDb.Lat = updateRegionObj.Lat;
+            regionFromDb.Code = updateRegionObj.Code;
+            regionFromDb.Long = updateRegionObj.Long;
+            regionFromDb.Name = updateRegionObj.Name;
+
+            _nZWalksDb.Update(regionFromDb);
             await _nZWalksDb.SaveChangesAsync();
 
-            return region;
+            return regionFromDb;
         }
     }
 }
