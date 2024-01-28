@@ -96,7 +96,7 @@ namespace NZWalks.API.Controllers
         [Route("{id:guid}")]
         public async Task<IActionResult> UpdateRegion(Guid id, UpdateRegionRequest updateRegionRequest)
         {
-            var region = new Region
+            var newRegion = new Region
             {
                 Code = updateRegionRequest.Code,
                 Name = updateRegionRequest.Name,
@@ -106,9 +106,14 @@ namespace NZWalks.API.Controllers
                 Long = updateRegionRequest.Long,
             };
 
-            await _regionRepository.UpdateAsync(id, region);
+            var regionFromDb = await _regionRepository.UpdateAsync(id, newRegion);
 
-            var regionDTO = _mapper.Map<RegionDTO>(region);
+            if(regionFromDb == null)
+            {
+                return NotFound();
+            }
+
+            var regionDTO = _mapper.Map<RegionDTO>(regionFromDb);
 
             return Ok(regionDTO);
         }
