@@ -47,9 +47,9 @@ namespace NZWalks.API.Repositories
             return await _nZWalksDb.Regions.FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        public async Task<Region> UpdateAsync(Region updateRegionObj)
+        public async Task<Region> UpdateAsync(Guid id, Region updateRegionObj)
         {
-            var region = await _nZWalksDb.Regions.FirstOrDefaultAsync(r => r.Id == updateRegionObj.Id);
+            var region = await _nZWalksDb.Regions.FirstOrDefaultAsync(r => r.Id == id);
             
             if (region == null)
             {
