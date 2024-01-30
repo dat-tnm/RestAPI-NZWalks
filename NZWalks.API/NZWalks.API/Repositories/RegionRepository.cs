@@ -63,7 +63,6 @@ namespace NZWalks.API.Repositories
             regionFromDb.Long = updateRegionObj.Long;
             regionFromDb.Name = updateRegionObj.Name;
 
-            _nZWalksDb.Update(regionFromDb);
             await _nZWalksDb.SaveChangesAsync();
 
             return regionFromDb;

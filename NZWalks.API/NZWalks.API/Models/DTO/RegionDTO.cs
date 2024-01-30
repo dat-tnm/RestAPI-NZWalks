@@ -9,8 +9,5 @@
         public double Lat { get; set; }
         public double Long { get; set; }
         public long Population { get; set; }
-
-        //Navigation Props
-        public IEnumerable<WalkDTO> Walks { get; set; }
     }
 }
